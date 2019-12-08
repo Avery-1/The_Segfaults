@@ -196,10 +196,14 @@ class Global {
 	bool downPressed = false;
 	bool leftPressed = false;
 	bool rightPressed = false;
+	
+	int showMeteor;
+	
         int score = 0;
 
         Global() {
             // sets where player spawns (use default res for in the middle)
+            showMeteor = 0;
             xres = 512;
             yres = 416;
             memset(keys, 0, 65536);
@@ -217,6 +221,22 @@ class Global {
             }
         }
 };
+class Meteor {
+public:
+	int type;
+	int linewidth;
+	int sound;
+	Vec pos;
+	Vec lastpos;
+	Vec vel;
+	Vec maxvel;
+	Vec force;
+	float length;
+	float color[4];
+	Meteor *prev;
+	Meteor *next;
+};
+
 
 class Player {
     public:
@@ -275,6 +295,7 @@ class Game {
         Bullet *barr;
         int nasteroids;
         int nbullets;
+		int currentScore;
         struct timespec bulletTimer;
         struct timespec mouseThrustTimer;
         bool ThrustOn;
@@ -287,6 +308,7 @@ class Game {
             barr = new Bullet[MAX_BULLETS];
             nasteroids = 0;
             nbullets = 0;
+			currentScore = 0;
             ThrustOn = false;
             //build 10 asteroids...
             for (int j=0; j<10; j++) {

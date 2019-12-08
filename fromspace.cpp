@@ -34,6 +34,8 @@ Game g;
 Timers t;
 gameStates gameScreen;
 
+
+
 Image img[9] = {
     "./images/gameBackground.png",
     "./images/playerSprite.png",
@@ -177,7 +179,12 @@ extern void ghettoRepeatRateFixReset();
 // -- Avery's Functions -- //
 extern void printAveryName(Rect rect);
 extern void printScores(Rect rect);
-extern int incrementScore(int);
+extern void createMeteors(const int n);
+extern void drawMeteors();
+extern void deleteMeteors(Meteor *node);
+extern void cleanupMeteors(void);
+extern void checkMeteors();
+extern int incrementScore(int&, int);
 extern int showCurrentScore(Rect rect, int);
 // -- Rodrigo's Functions -- //
 extern void renderBackgroundLayer(int, int, float [], float [], GLuint);
@@ -542,6 +549,9 @@ int check_keys(XEvent *e)
             t.recordTime(&t.walkTime);
             gl.walk = 1;
             break;
+        case XK_r:
+			gl.showMeteor ^= 1;
+			break;    
         case XK_equal:
             break;
         case XK_minus:
@@ -654,6 +664,8 @@ void physics()
     scrollBackground(gl.tex.xc[0], gl.tex.xc[1]);
     scrollAsteroidLayer(gl.tex.xc[2], gl.tex.xc[3]);
     move(g,gl);
+    if (gl.showMeteor)
+		checkMeteors();
     // init a bullet
     Bullet *b = NULL;
 
@@ -755,6 +767,9 @@ void physics()
                         g.ahead = ta;
                         g.nasteroids++;
                     }
+				//add 25 to player score for killing bigger enemy
+				incrementScore(g.currentScore, 25);
+				//std::cout << g.currentScore << std::endl;
                 } else {
                     a->color[0] = 1.0;
                     a->color[1] = 0.1;
@@ -765,6 +780,9 @@ void physics()
                     deleteAsteroid(&g, a);
                     a = savea;
                     g.nasteroids--;
+					//add 50 to player score for killing small enemy
+					incrementScore(g.currentScore, 50);
+					//std::cout << g.currentScore << std::endl;
                 }
                 //delete the bullet...
                 memcpy(&g.barr[i], &g.barr[g.nbullets-1], sizeof(Bullet));
@@ -857,11 +875,15 @@ void render()
         r.bot = gl.yres - 20;
         r.left = 10;
         r.center = 0;
+        if (gl.showMeteor)
+			drawMeteors();
+		unsigned int color = 0x00ffff00;
         //ggprint8b(&r, 16, 0x00ff0000, "3350 - Asteroids");
         //ggprint8b(&r, 16, 0x00ffff00, "n bullets: %i", g.nbullets);
         //ggprint8b(&r, 16, 0x00ffff00, "n asteroids: %i", g.nasteroids);
-        ggprint8b(&r, 16, 0x00ffff00, "L Scores Screen");
-	ggprint8b(&r, 16, 0x00ffff00, "Current Score: ");
+        ggprint8b(&r, 16, color, "L - Scores Screen");
+        ggprint8b(&r, 16, color, "R - Meteor Shower");
+		ggprint8b(&r, 16, color, "Current Score: %i", g.currentScore);
 
         //-------------------------------------------------------------------------
         //Draw the player
