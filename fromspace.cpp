@@ -182,6 +182,7 @@ extern void VelCheck(Global &, Game &);
 extern void ghettoRepeatRateFix();
 extern void ghettoRepeatRateFixReset();
 extern void playerCollision(Game &g, Asteroid *a);
+extern void gameOver(Game &g, gameStates &gamescreen);
 // -- Avery's Functions -- //
 extern void printAveryName(Rect rect);
 extern void printScores(Rect rect);
@@ -747,6 +748,7 @@ void physics()
         //is there a bullet within its radius?
         int i=0;
 	playerCollision(g,a);
+	gameOver(g,gameScreen);
         while (i < g.nbullets) {
             Bullet *b = &g.barr[i];
             d0 = b->pos[0] - a->pos[0];

@@ -41,8 +41,8 @@ void playerCollision(Game &g, Asteroid *a)
 	if (dist < 7000) {
 		g.hp -= 1;
 	}
-
 }
+
 void ghettoRepeatRateFix()
 {
 	system("xset r rate 1 40");
@@ -106,6 +106,14 @@ void moveRight(Game &g)
 	g.player.pos[0] += 10.0;
 }
 
+void gameOver (Game &g, gameStates &gameScreen)
+{
+	if (g.hp <= 0)
+	{
+		gameScreen = CREDITS;
+		ghettoRepeatRateFixReset();
+	}
+}
 //This is my Friday code
 /*
 void playerDecelerate(Game &g)

@@ -305,12 +305,12 @@ class Game {
     public:
         Game() {
             gameSelection = 0;
-            hp = 100;
+            hp = 250;
             ahead = NULL;
             barr = new Bullet[MAX_BULLETS];
             nasteroids = 0;
             nbullets = 0;
-			currentScore = 0;
+	    currentScore = 0;
             ThrustOn = false;
             //build 10 asteroids...
             for (int j=0; j<10; j++) {
