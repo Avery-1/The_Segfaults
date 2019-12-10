@@ -20,8 +20,9 @@ Stretch goals:
 1) Animate player   COMPLETE! (has an odd loop)
 2) Animate enemy    COMPLETE!
 3) Include a foreground   COMPLETE!
-4) Implement audio system and audio effects    WIP (buggy)
+4) Implement audio system and audio effects    COMPLETE!
 5) Retrieve and update High Scores from a remote location
+	(UPDATE: Avery Raines will handle the scoring)
 */
 
 #include <stdlib.h>
@@ -488,27 +489,6 @@ void keyUp(Game &g, gameStates &gameScreen, char caller)
     }
     else if (gameScreen == INGAME) {
 	    moveUp(g);
-	/*    
-        //apply thrust
-        //convert player angle to radians
-        Flt rad = ((g.player.angle+90.0) / 360.0f) * PI * 2.0;
-	
-        //convert angle to a vector
-        Flt xdir = cos(rad);
-        Flt ydir = sin(rad);
-        g.player.vel[0] += xdir*0.02f;
-        g.player.vel[1] += ydir*0.02f;
-        Flt speed = sqrt(g.player.vel[0]*g.player.vel[0]+
-                g.player.vel[1]*g.player.vel[1]);
-
-        if (speed > 10.0f) {
-            speed = 10.0f;
-            extern void normalize2d(Vec v);
-            normalize2d(g.player.vel);
-            g.player.vel[0] *= speed;
-            g.player.vel[1] *= speed;
-        }
-	*/
     }           
     else if (gameScreen == HIGHSCORES) {
     }

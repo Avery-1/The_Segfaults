@@ -887,6 +887,7 @@ void render()
 
         //-------------------------------------------------------------------------
         //Draw the player
+	/*
         glColor3fv(g.player.color);
         glPushMatrix();
         glTranslatef(g.player.pos[0], g.player.pos[1], g.player.pos[2]);
@@ -908,11 +909,11 @@ void render()
         glVertex2f(0.0f, 0.0f);
         glEnd();
         glPopMatrix();
+	*/
 
         /* This will NOT be included in the final program
          * Our player flies, not explodes
          * This will be kept for visual clarity temporarily
-         */
         if (gl.keys[XK_Up] || g.ThrustOn) {
             int i;
             //draw thrust
@@ -934,6 +935,7 @@ void render()
             }
             glEnd();
         }
+         */
         //-------------------------------------------------------------------------
         //Draw the asteroids
         {
