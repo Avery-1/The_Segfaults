@@ -26,11 +26,21 @@
  *
  *
  */
-
-#include "fonts.h"
-#ifdef USE_OPENAL_SOUND
+#include <stdlib.h>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+#include <math.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <time.h>
+#include <GL/glx.h>
+#ifdef OPENAL_ENABLE
 #include </usr/include/AL/alut.h>
 #endif
+#include "log.h"
+#include "fonts.h"
+#include "gameFoundation.h"
 
 void showNameLoay(Rect credits)
 {
@@ -107,3 +117,59 @@ extern void initialize_sounds()
 
 }
 */
+
+
+void enemyWaves(Game &g, int size)
+{
+            for (int j=0; j<size; j++) {
+                Asteroid *a = new Asteroid;
+                a->nverts = 8;
+                a->radius = rnd()*80.0 + 40.0;
+                Flt r2 = a->radius / 2.0;
+                Flt angle = 0.0f;
+                Flt inc = (PI * 2.0) / (Flt)a->nverts;
+                for (int i=0; i<a->nverts; i++) {
+                    a->vert[i][0] = sin(angle) * (r2 + rnd() * a->radius);
+                    a->vert[i][1] = cos(angle) * (r2 + rnd() * a->radius);
+                    angle += inc;
+                }
+                a->pos[0] = (Flt)(rand() % 1024);
+                a->pos[1] = (Flt)(rand() % 500);
+                a->pos[0] = .2f;
+               	a->pos[1] = .5f;
+                a->pos[2] = 0.0f;
+                a->angle = 0.0;
+               a->rotate = rnd() * 4.0 - 2.0;
+                a->color[0] = 0.8;
+                a->color[1] = 0.8;
+                a->color[2] = 0.7;
+                a->vel[0] = (Flt)(rnd()*2.0-1.0);
+                a->vel[1] = (Flt)(rnd()*2.0-1.0);
+                //std::cout << "asteroid" << std::endl;
+                //add to front of linked list
+                a->next = g.ahead;
+                if (g.ahead != NULL)
+                    g.ahead->prev = a;
+                g.ahead = a;
+                ++g.nasteroids;
+            }
+            clock_gettime(CLOCK_REALTIME, &g.bulletTimer);
+}
+
+
+void waveMain(Game &g, Timers &t)
+{
+	int  waveRate = 20;
+   	int  waveSize = 1;
+      	int  waveNum = 1;
+        struct timespec at;
+        clock_gettime(CLOCK_REALTIME, &at);
+        double ts = t.timeDiff(&t.timeStart, &at);
+        int nseconds = (int)ts *1000000;
+        if (nseconds % (waveRate*1000000) == 0) {
+                enemyWaves(g,waveSize);
+                waveSize++;
+                waveRate--;
+                waveNum++;
+        }
+}

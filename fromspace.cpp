@@ -165,6 +165,8 @@ void physics();
 void render();
 
 extern void showSkylerName(Rect rect);
+// -- Loay Functions -- //
+extern void enemyWaves(Game &, Global &, int);
 extern void showNameLoay(Rect rect);
 extern void readScores();
 extern int incrementTestScore(int x);
