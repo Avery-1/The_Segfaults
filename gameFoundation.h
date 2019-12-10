@@ -295,7 +295,9 @@ class Game {
         Bullet *barr;
         int nasteroids;
         int nbullets;
-		int currentScore;
+	int currentScore;
+	int hp;
+	bool hpiterator;
         struct timespec bulletTimer;
         struct timespec mouseThrustTimer;
         bool ThrustOn;
@@ -303,7 +305,7 @@ class Game {
     public:
         Game() {
             gameSelection = 0;
-            
+            hp = 100;
             ahead = NULL;
             barr = new Bullet[MAX_BULLETS];
             nasteroids = 0;

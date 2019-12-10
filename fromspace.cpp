@@ -179,6 +179,7 @@ extern void VelCheck(Global &, Game &);
 //extern void moveRight(Game &);
 extern void ghettoRepeatRateFix();
 extern void ghettoRepeatRateFixReset();
+extern void playerCollision(Game &g, Asteroid *a);
 // -- Avery's Functions -- //
 extern void printAveryName(Rect rect);
 extern void printScores(Rect rect);
@@ -646,7 +647,7 @@ void buildAsteroidFragment(Asteroid *ta, Asteroid *a)
         ta->vert[i][0] = sin(angle) * (r2 + rnd() * ta->radius);
         ta->vert[i][1] = cos(angle) * (r2 + rnd() * ta->radius);
         angle += inc;
-    }
+    } 
     ta->pos[0] = a->pos[0] + rnd()*10.0-5.0;
     ta->pos[1] = a->pos[1] + rnd()*10.0-5.0;
     ta->pos[2] = 0.0f;
@@ -743,6 +744,7 @@ void physics()
     while (a) {
         //is there a bullet within its radius?
         int i=0;
+	playerCollision(g,a);
         while (i < g.nbullets) {
             Bullet *b = &g.barr[i];
             d0 = b->pos[0] - a->pos[0];
@@ -883,7 +885,8 @@ void render()
         //ggprint8b(&r, 16, 0x00ffff00, "n asteroids: %i", g.nasteroids);
         ggprint8b(&r, 16, color, "L - Scores Screen");
         ggprint8b(&r, 16, color, "R - Meteor Shower");
-		ggprint8b(&r, 16, color, "Current Score: %i", g.currentScore);
+	ggprint8b(&r, 16, color, "Current Score: %i", g.currentScore);
+	ggprint8b(&r, 16, color, "Current HP: %i", g.hp);
 
         //-------------------------------------------------------------------------
         //Draw the player
