@@ -38,12 +38,9 @@ void playerCollision(Game &g, Asteroid *a)
 	dist0 = g.player.pos[0] - a->pos[0];
 	dist1 = g.player.pos[1] - a->pos[1];
 	dist = (dist0*dist0+dist1*dist1);
-	if (dist < (a->radius*a->radius) && g.hpiterator == true) {
+	if (dist < 7000) {
 		g.hp -= 1;
-		g.hpiterator = false;
 	}
-	else
-		g.hpiterator = true;
 
 }
 void ghettoRepeatRateFix()
