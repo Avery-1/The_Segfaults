@@ -74,55 +74,27 @@ void VelCheck(Global &gl, Game &g)
         g.player.vel[1] = 0.00;
     }
 }
-
-void move(Game &g, Global &gl)
+void moveUp(Game &g)
 {
-	if (gl.upPressed==true && gl.rightPressed==true)
-	{
-		g.player.pos[0] += 10.0;
-		g.player.pos[1] += 10.0;
-	}
-	else
-	if (gl.upPressed==true && gl.leftPressed==true)
-	{
-		g.player.pos[0] -= 10.0;
-		g.player.pos[1] += 10.0;
-	}
-	else
-	if (gl.downPressed==true && gl.rightPressed==true)
-	{
-		g.player.pos[0] += 10.0;
-		g.player.pos[1] -= 10.0;
-	}
-	else
-	if (gl.downPressed==true && gl.leftPressed==true)
-	{
-		g.player.pos[0] -= 10.0;
-		g.player.pos[1] -= 10.0;
-	}
-	else
-	if (gl.leftPressed==true && gl.rightPressed==true)
-	{
-		gl.leftPressed=false;
-		gl.rightPressed=false;
-	}
-	else
-	if (gl.upPressed == true)
-		g.player.pos[1] += 10.0;
-	else
-	if (gl.downPressed == true)
-		g.player.pos[1] -= 10.0;
-	else
-	if (gl.rightPressed == true)
-		g.player.pos[0] += 10.0;
-	else
-	if (gl.leftPressed == true)
-		g.player.pos[0] -= 10.0;
-	gl.upPressed = false;
-	gl.downPressed = false;
-	gl.leftPressed = false;
-	gl.rightPressed = false;
+	g.player.pos[1] += 5.0;
 }
+
+
+void moveDown(Game &g)
+{
+	g.player.pos[1] -= 5.0;
+}
+
+void moveLeft(Game &g)
+{
+	g.player.pos[0] -= 10.0;
+}
+
+void moveRight(Game &g)
+{
+	g.player.pos[0] += 10.0;
+}
+
 //This is my Friday code
 /*
 void playerDecelerate(Game &g)

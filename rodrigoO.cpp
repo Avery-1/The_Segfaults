@@ -45,6 +45,11 @@ Stretch goals:
 #include "fonts.h"
 #include "gameFoundation.h"
 
+extern void moveUp(Game &);
+extern void moveDown(Game &);
+extern void moveLeft(Game &);
+extern void moveRight(Game &);
+
 typedef float Flt;
 typedef float Vec[3];
 typedef Flt Matrix[4][4];
@@ -420,18 +425,18 @@ void fireBullets(Timers &t, Game &g, Bullet *b)
 // gameScreen currently set to MENU
 // gameSelection is from game class, set to 1 by default
 
-/*void keyLeft(Game &g, gameStates &gameScreen)
+void keyLeft(Game &g, gameStates &gameScreen)
 {
     if (gameScreen == MENU) {
     }
     else if (gameScreen == TUTORIAL) {
     }
     else if (gameScreen == INGAME) {
-	    
-        g.player.angle += 4.0;
+	moveLeft(g);    
+        /*g.player.angle += 4.0;
 
         if (g.player.angle >= 360.0f)
-            g.player.angle -= 360.0f;
+            g.player.angle -= 360.0f;*/
 	    
     }
 }
@@ -439,15 +444,15 @@ void fireBullets(Timers &t, Game &g, Bullet *b)
 void keyRight(Game &g, gameStates &gameScreen)
 {
     if (gameScreen == INGAME) {
-	    
-        g.player.angle -= 4.0;
+	moveRight(g);
+	/*g.player.angle -= 4.0;
 
         if (g.player.angle < 0.0f)
-            g.player.angle += 360.0f;
+            g.player.angle += 360.0f;*/
 	    
     }
 }
-*/
+
 void keyDown(Game &g, gameStates &gameScreen, char caller)
 {
     if (gameScreen == MENU) {
@@ -461,6 +466,7 @@ void keyDown(Game &g, gameStates &gameScreen, char caller)
         }
     }
     else if (gameScreen == INGAME) {
+	    moveDown(g);
     }
     else if (gameScreen == HIGHSCORES) {
     }
@@ -481,6 +487,7 @@ void keyUp(Game &g, gameStates &gameScreen, char caller)
         }
     }
     else if (gameScreen == INGAME) {
+	    moveUp(g);
 	/*    
         //apply thrust
         //convert player angle to radians

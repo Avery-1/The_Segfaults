@@ -173,7 +173,10 @@ extern void showHighScores();
 // -- Skyler's Functions -- //
 extern void BoundaryCheck(Global &, Game &);
 extern void VelCheck(Global &, Game &);
-extern void move(Game &,Global &);
+//extern void moveUp(Game &);
+//extern void moveDown(Game &);
+//extern void moveLeft(Game &);
+//extern void moveRight(Game &);
 extern void ghettoRepeatRateFix();
 extern void ghettoRepeatRateFixReset();
 // -- Avery's Functions -- //
@@ -198,8 +201,8 @@ extern void repositionBullets(Timers &, Game &, Global &, Bullet *);
 extern void fireBullets(Timers &, Game &, Bullet *);
 extern void keyUp(Game &, gameStates &, char);
 extern void keyDown(Game &, gameStates &, char);
-//extern void keyLeft(Game &, gameStates &);
-//extern void keyRight(Game &, gameStates &);
+extern void keyLeft(Game &, gameStates &);
+extern void keyRight(Game &, gameStates &);
 extern void keySpace(Timers &t, Game &, Bullet *, gameStates &);
 extern void keyEnter(Game &, gameStates &);
 extern void showRodrigosName(Rect rect);
@@ -550,25 +553,23 @@ int check_keys(XEvent *e)
             gl.walk = 1;
             break;
         case XK_r:
-			gl.showMeteor ^= 1;
-			break;    
+	    gl.showMeteor ^= 1;
+	    break;    
         case XK_equal:
             break;
         case XK_minus:
             break;
         case XK_Up:
             keyUp(g,gameScreen, 'k');
-	    gl.upPressed = true;
             break;
         case XK_Down:
             keyDown(g,gameScreen, 'k');
-	    gl.downPressed = true;
 	    break;
 	case XK_Left:
-	    gl.leftPressed = true;
+	    keyLeft(g,gameScreen);
 	    break;
 	case XK_Right:
-	    gl.rightPressed = true;
+	    keyRight(g,gameScreen);
 	    break;
         case XK_Return:
             keyEnter(g, gameScreen);
@@ -663,7 +664,6 @@ void physics()
 {
     scrollBackground(gl.tex.xc[0], gl.tex.xc[1]);
     scrollAsteroidLayer(gl.tex.xc[2], gl.tex.xc[3]);
-    move(g,gl);
     if (gl.showMeteor)
 		checkMeteors();
     // init a bullet
@@ -691,8 +691,8 @@ void physics()
     Flt d0,d1,dist;
 
     //Update player position
-    g.player.pos[0] += g.player.vel[0];
-    g.player.pos[1] += g.player.vel[1];
+    //g.player.pos[0] += g.player.vel[0];
+    //g.player.pos[1] += g.player.vel[1];
     VelCheck(gl, g);
     //Check for collision with window edges
     /* if (g.player.pos[0] < 0.0) {
